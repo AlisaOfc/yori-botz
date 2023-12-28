@@ -1,0 +1,5 @@
+node_modules/
+storage/tmp/*
+system/session
+package-lock.json
+storage/database.json
