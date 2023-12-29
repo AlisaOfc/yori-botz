@@ -137,7 +137,7 @@ async function webp2mp4File(source) {
 }
 
 async function uploadFile(buffer) {
-    const from = new Func.FormData()
+    const form = new Func.FormData()
     const { ext } = await fileTypeFromBuffer(buffer)
 
     form.append("file", buffer, await Func.getRandom(ext))

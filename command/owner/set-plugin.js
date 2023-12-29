@@ -5,8 +5,8 @@ export default {
     name: "safe",
     tags: "owner",
 
-    owner: true
-    quoted: true
+    owner: true,
+    quoted: true,
 
     run: async(m, { text }) => {
         text = text.endsWith(".js") ? text.split(".js")[0] : text
