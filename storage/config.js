@@ -17,7 +17,7 @@ global.pairingNumber = "" //isi dengan nomor bot mu
 
 global.prefix = /^[°•π÷×¶∆£¢€¥®™+✓_=|/~!?@#%^&.©^]/i
 global.thumbnail = fs.readFileSync("./storage/media/images.jpg")
-global.timeImage = Function.imageTime()
+global.timeImage = Function.timeImage()
 global.ucapan = Function.timeSpeech()
 global.multiplier = 69
 global.func = Function
