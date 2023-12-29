@@ -10,6 +10,8 @@ global.wm = "Made from love"
 global.author = "Alisa Dev"
 global.packname = "Created Sticker By"
 
+global.apikey = "buy on https://api.yanzbotz.my.id/pricing"
+global.api = "https://api.yanzbotz.my.id/"
 global.link = "https://github.com/AlisaOfc"
 
 global.owner = ["6287874358314"]

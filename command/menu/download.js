@@ -14,16 +14,16 @@ Hi @%user %ucapan
     footer: "╰───────···\n",
     after: "Ketik *.help --sticker* untuk mendapatkan detail dan penggunaan contoh"
 }
-    
+
 let tags = {
-	"main": "Main Menu"
+	"download": "Download Menu"
 }
 
 export default {
-    command: ["menumain"],
-    description: "Untuk menampilkan menu tipe main, dan melihat cara menggunakan menu",
+    command: ["menudownload"],
+    description: "Untuk menampilkan menu tipe download, dan melihat cara menggunakan menu",
     example: "",
-    name: "menumain",
+    name: "menudownload",
     tags: "listmenu",
 
     register: true,

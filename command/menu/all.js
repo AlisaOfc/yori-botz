@@ -25,6 +25,7 @@ let menu = {
 }
 
 let tags = {
+    "download": "Download Menu",
     "group": "Group Menu",
     "main": "Main Menu",
     "owner": "Owner Menu",

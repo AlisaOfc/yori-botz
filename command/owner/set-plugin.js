@@ -1,8 +1,8 @@
 export default {
-    command: ["safe", "sf"],
+    command: ["sf"],
     description: "Menyimpan file plugin ke direktori command",
     example: "Example: %p%cmd owner/add",
-    name: "safe",
+    name: "sf",
     tags: "owner",
 
     owner: true,
@@ -11,6 +11,6 @@ export default {
     run: async(m, { text }) => {
         text = text.endsWith(".js") ? text.split(".js")[0] : text
         func.fs.writeFileSync("command/" + text + ".js", m.quoted.body)
-        m.reply("Disimpan di plugin " + text + " [ ✅ ]")
+        m.reply("File plugin " + text + " telah disimpan")
     }
 }
