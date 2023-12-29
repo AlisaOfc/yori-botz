@@ -1,5 +1,5 @@
 import os from "os"
-
+    
 let menu = {
 	before: `
 *${global.name}* adalah bot WhatsApp yang dapat anda gunakan sebagai alat untuk membuat *Stiker*, mendengarkan *Musik*, mengunduh konten dari *Media Sosial*, dan memainkan *Game RPG* secara real-time.
@@ -82,9 +82,9 @@ export default {
                         previewType: "pdf",
                         title: global.name,
                         body: wm,
-                        thumbnail: thumbnail,
+                        thumbnail: timeImage,
                         renderLargerThumbnail: true,
-                        sourceUrl: linkGroup
+                        sourceUrl: link
                     }
                 }
             }, { quoted: null })

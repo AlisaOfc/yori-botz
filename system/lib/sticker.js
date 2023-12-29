@@ -6,11 +6,11 @@ import axios from "axios"
 import Crypto from "crypto"
 import ff from "fluent-ffmpeg"
 import webp from "node-webpmux"
-
+import { fileTypeFromBuffer } from "file-type"
 
 async function imageToWebp(media) {
-    const tmpFileOut = path.join(process.cwd(), "storage/tmp", `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-    const tmpFileIn = path.join(process.cwd(), "storage/tmp", `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.jpg`)
+    const tmpFileOut = path.join(process.cwd(), "storage/tmp", await Func.getRandom("webp"))
+    const tmpFileIn = path.join(process.cwd(), "storage/tmp", await Func.getRandom("jpg"))
 
     fs.writeFileSync(tmpFileIn, media)
 
@@ -35,8 +35,8 @@ async function imageToWebp(media) {
 }
 
 async function videoToWebp(media) {
-    const tmpFileOut = path.join(process.cwd(), "storage/tmp", `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-    const tmpFileIn = path.join(process.cwd(), "storage/tmp", `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.mp4`)
+    const tmpFileOut = path.join(process.cwd(), "storage/tmp", await Func.getRandom("webp"))
+    const tmpFileIn = path.join(process.cwd(), "storage/tmp", await Func.getRandom("mp4"))
 
     fs.writeFileSync(tmpFileIn, media)
 
@@ -73,8 +73,8 @@ async function videoToWebp(media) {
 
 async function writeExif(media, metadata) {
     let wMedia = /webp/.test(media.mimetype) ? media.data : /image/.test(media.mimetype) ? await imageToWebp(media.data) : /video/.test(media.mimetype) ? await videoToWebp(media.data) : ""
-    const tmpFileOut = path.join(process.cwd(), "storage/tmp", `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-    const tmpFileIn = path.join(process.cwd(), "storage/tmp", `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(30)}.webp`)
+    const tmpFileOut = path.join(process.cwd(), "storage/tmp", await Func.getRandom("webp"))
+    const tmpFileIn = path.join(process.cwd(), "storage/tmp", await Func.getRandom("webp", "15"))
 
     fs.writeFileSync(tmpFileIn, wMedia)
 
@@ -136,46 +136,19 @@ async function webp2mp4File(source) {
     })
 }
 
-async function telegraPh(buffer) {
-    return new Promise (async (resolve, reject) => {
-        try {
-            const input = Buffer.from(buffer)
-            const form = new Func.FormData()
-
-            form.append("file", input, { filename: "data" })
-            const data = await axios.post("https://telegra.ph/upload", form, {
-                headers: {
-                    "User-Agent": "okhttp/4.9.3",
-                    ...form.getHeaders()
-                }
-            })
-
-            resolve("https://telegra.ph" + data.data[0].src)
-        } catch (e) {
-            reject(e)
-        }
-    })
-}
-
 async function uploadFile(buffer) {
-    return new Promise (async (resolve, reject) => {
-        try {
-            const input = Buffer.from(buffer)
-            const form = new Func.FormData()
+    const from = new Func.FormData()
+    const { ext } = await fileTypeFromBuffer(buffer)
 
-            form.append("file", input, { filename: "data" })
-            const data = await axios.post("https://uguu.se/upload.php", form, {
-                headers: {
-                    "User-Agent": "okhttp/4.9.3",
-                    ...form.getHeaders()
-                }
-            })
-
-            resolve(data.data.files[0])
-        } catch (e) {
-            reject(e)
-        }
+    form.append("file", buffer, await Func.getRandom(ext))
+    let a = await axios.post("https://filezone.my.id/upload", form, {
+        headers: {
+            accept: "*/*",
+            "accept-language": "en-US,en;q=0.9,id;q=0.8",
+            "content-type": `multipart/form-data; boundary=${form._boundary}`,
+        },
     })
+    return a.data.result
 }
 
-export { uploadFile, telegraPh, imageToWebp, videoToWebp, writeExif, webp2mp4File }
+export { uploadFile, imageToWebp, videoToWebp, writeExif, webp2mp4File }

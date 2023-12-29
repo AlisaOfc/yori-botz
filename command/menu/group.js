@@ -70,9 +70,9 @@ export default {
                         previewType: "pdf",
                         title: global.name,
                         body: wm,
-                        thumbnail: thumbnail,
+                        thumbnail: timeImage,
                         renderLargerThumbnail: true,
-                        sourceUrl: linkGroup
+                        sourceUrl: link
                     }
                 }
             }, { quoted: null })

@@ -134,22 +134,6 @@ export default new (class Function {
       }
    }
 
-   async fetchText(url, options = {}) {
-      try {
-         let data = await axios.get(url, {
-            headers: {
-               ...(!!options.headers ? options.headers : {})
-            },
-            responseType: "text",
-            ...options
-         })
-
-         return await data?.data
-      } catch (e) {
-         throw e
-      }
-   }
-
    fetchBuffer(string, options = {}) {
       return new Promise(async (resolve, reject) => {
          try {
@@ -300,67 +284,6 @@ export default new (class Function {
       return dDisplay + hDisplay + mDisplay + sDisplay
    }
 
-   async correct(mainString, targetStrings) {
-      function compareTwoStrings(first, second) {
-         first = first.replace(/\s+/g, "")
-         second = second.replace(/\s+/g, "")
-
-         if (first === second) return 1
-         if (first.length < 2 || second.length < 2) return 0
-
-         let firstBigrams = new Map()
-         for (let i = 0; i < first.length - 1; i++) {
-            const bigram = first.substring(i, i + 2)
-            const count = firstBigrams.has(bigram) ? firstBigrams.get(bigram) + 1 : 1
-
-            firstBigrams.set(bigram, count)
-         }
-
-         let intersectionSize = 0
-         for (let i = 0; i < second.length - 1; i++) {
-            const bigram = second.substring(i, i + 2)
-            const count = firstBigrams.has(bigram) ? firstBigrams.get(bigram) : 0
-
-            if (count > 0) {
-               firstBigrams.set(bigram, count - 1)
-               intersectionSize++
-            }
-         }
-
-         return (
-            (2.0 * intersectionSize) / (first.length + second.length - 2)
-         )
-      }
-
-      targetStrings = Array.isArray(targetStrings) ? targetStrings : []
-
-      let ratings = []
-      let bestMatchIndex = 0
-
-      for (let i = 0; i < targetStrings.length; i++) {
-         const currentTargetString = targetStrings[i]
-         const currentRating = compareTwoStrings(mainString, currentTargetString)
-
-         ratings.push({
-            target: currentTargetString,
-            rating: currentRating,
-         })
-
-         if (currentRating > ratings[bestMatchIndex].rating) {
-            bestMatchIndex = i
-         }
-      }
-
-      const bestMatch = ratings[bestMatchIndex]
-
-      return {
-         all: ratings,
-         indexAll: bestMatchIndex,
-         result: bestMatch.target,
-         rating: bestMatch.rating,
-      }
-   }
-   
    loading() {
       var { terminal } = term
 	  var progressBar, progress = 0
@@ -412,5 +335,32 @@ export default new (class Function {
             }
             break
       }
+   }
+
+   timeSpeech() {
+      let ucapanWaktu = ""
+      let wakt = moment.tz("Asia/Jakarta").format("HH:mm")
+
+      if (wakt < "23:59") ucapanWaktu = "Selamat Malam"
+      if (wakt < "19:00") ucapanWaktu = "Selamat Petang"
+      if (wakt < "18:00") ucapanWaktu = "Selamat Sore"
+      if (wakt < "15:00") ucapanWaktu = "Selamat Siang"
+      if (wakt < "10:00") ucapanWaktu = "Selamat Pagi"
+      if (wakt < "05:00") ucapanWaktu = "Selamat Subuh"
+      if (wakt < "03:00") ucapanWaktu = "Selamat Tengah Malam"
+
+      return ucapanWaktu
+   }
+
+   timeImage() {
+      let image = ""
+      let waktu = moment.tz("Asia/Jakarta").format("HH:mm")
+
+      if (waktu < "23:59") image = fs.readFileSync("./storage/media/image time (1).jpg")
+      if (waktu < "18:00") image = fs.readFileSync("./storage/media/image time (2).jpg")
+      if (waktu < "15:00") image = fs.readFileSync("./storage/media/image time.jpg")
+      if (waktu < "10:00") image = fs.readFileSync("./storage/media/image time (2).jpg")
+
+      return image
    }
 })()

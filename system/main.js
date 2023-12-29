@@ -25,7 +25,7 @@ async function start() {
     } else {
         global.db = content
     }
-
+    
     const msgRetryCounterCache = new NodeCache()
     const { state, saveCreds } = await baileys.useMultiFileAuthState("./system/session")
     const conn = baileys.default({
@@ -62,10 +62,10 @@ async function start() {
 
     if (!conn.authState.creds.registered) {
         let phoneNumber
-    
+
         if (!!global.pairingNumber) {
             phoneNumber = global.pairingNumber.replace(/[^0-9]/g, "")
-    
+
             if (!Object.keys(baileys.PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v))) {
                 console.log(chalk.bgBlack(chalk.redBright("Start with your country's WhatsApp code, Example : 62xxx")))
                 process.exit(0)
@@ -73,16 +73,16 @@ async function start() {
         } else {
             phoneNumber = await question(chalk.bgBlack(chalk.greenBright("Please type your WhatsApp number : ")))
             phoneNumber = phoneNumber.replace(/[^0-9]/g, "")
-    
+
             if (!Object.keys(baileys.PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v))) {
                 console.log(chalk.bgBlack(chalk.redBright("Start with your country's WhatsApp code, Example : 62xxx")))
-    
+
                 phoneNumber = await question(chalk.bgBlack(chalk.greenBright("Please type your WhatsApp number : ")))
                 phoneNumber = phoneNumber.replace(/[^0-9]/g, "")
                 rl.close()
             }
         }
-    
+
         setTimeout(async () => {
             let code = await conn.requestPairingCode(phoneNumber)
             code = code?.match(/.{1,4}/g)?.join("-") || code
@@ -149,7 +149,7 @@ async function start() {
     conn.ev.on("groups.update", async (update) => {
         await (await import(`./handler.js?v=${Date.now()}`)).groupsUpdate(update)
     })
-    
+
     conn.ev.on("call", async (json) => {
         await (await import(`./handler.js?v=${Date.now()}`)).rejectCall(json)
     })

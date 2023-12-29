@@ -24,7 +24,7 @@ export async function handler(conn, m, chatUpdate) {
         if (db.settings.autoread) conn.readMessages([m.key])
 
         if (m.isOwner) {
-            if ([">", "eval", "=>"].some(a => m.body.toLowerCase().startsWith(a))) {
+            if ([">", "=>"].some(a => m.body.toLowerCase().startsWith(a))) {
                 let __dirname = func.path.dirname(fileURLToPath(import.meta.url))
                 let require = createRequire(__dirname), _return = ""
 
@@ -239,7 +239,7 @@ export async function participantsUpdate({ id, participants, action }) {
 
     let chat = db.chats[id] || {}, ppuser
     let metadata = await conn.groupMetadata(id)
-
+    
     switch (action) {
         case "add":
         case "remove":
@@ -248,7 +248,7 @@ export async function participantsUpdate({ id, participants, action }) {
                     try {
                         ppuser = await conn.profilePictureUrl(user, "image")
 					} catch {
-                        ppuser = "https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg"
+                        ppuser = "https://telegra.ph/file/04022fa475e4162862d8b.jpg"
 					} finally {
                         let tekswell = `Halo @${user.split("@")[0]} 👋\n\nSelamat datang di grup ${metadata.subject}! Kami senang kamu bergabung dengan kami.\n\nSaya harap kamu betah disini dan jangan lupa untuk selalu mengikuti peraturan yang ada`  
                         let teksbye = `Selamat tinggal @${user.split("@")[0]} 👋\n\nSalam perpisahan, kami harap kamu baik-baik saja disana`

@@ -7,7 +7,7 @@ export async function before(m) {
     const isGroupLink = linkRegex.exec(m.text)
     const kickMessage = "Tautan Group Terdeteksi\n\nMaaf, kami memiliki kebijakan yang melarang pengiriman tautan grup WhatsApp di grup ini. Kami berharap Anda dapat mematuhi aturan ini untuk menjaga lingkungan yang aman dan terhindar dari spam. Terima kasih atas kerjasama Anda."
 
-    if (chat.antiLink && isGroupLink) {
+    if (chat.antilink && isGroupLink) {
         await m.reply(kickMessage)
         conn.sendMessage(m.chat, { delete: m.key })
 

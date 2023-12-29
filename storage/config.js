@@ -1,22 +1,24 @@
 import fs from "fs"
 import chalk from "chalk"
 import { fileURLToPath } from "url"
-import moment from "moment-timezone"
 import Function from "../system/lib/function.js"
 
 //—————「 Setings your bot 」—————//
-global.author = "Alisa Dev"
 global.name = "Yori - Botz"
-global.packname = "Created Sticker By"
 global.wm = "Made from love"
-global.linkGroup = "https://s.id/Kitsune-Infomation"
 
-global.owner = ["6287874358314", "62895347198105"]
-global.pairingNumber = "" //wajib diisi
+global.author = "Alisa Dev"
+global.packname = "Created Sticker By"
+
+global.link = "https://github.com/AlisaOfc"
+
+global.owner = ["6287874358314"]
+global.pairingNumber = "" //isi dengan nomor bot mu
 
 global.prefix = /^[°•π÷×¶∆£¢€¥®™+✓_=|/~!?@#%^&.©^]/i
-global.thumbnail = fs.readFileSync("./storage/media/thumbnail.jpg")
-global.ucapan = timeSpeech()
+global.thumbnail = fs.readFileSync("./storage/media/images.jpg")
+global.timeImage = Function.imageTime()
+global.ucapan = Function.timeSpeech()
 global.multiplier = 69
 global.func = Function
 
@@ -46,27 +48,10 @@ global.adReply = {
             description: author,
             previewType: "PHOTO",
             thumbnail: thumbnail,
-            mediaUrl: "https://github.com/AlisaOfc",
-            sourceUrl: "https://github.com/AlisaOfc"
+            mediaUrl: link,
+            sourceUrl: link
         }
     }
-}
-
-
-//—————「 It"s a function 」—————//
-function timeSpeech() {
-	let wakt = moment.tz("Asia/Jakarta").format("HH:mm")
-	let ucapanWaktu = ""
-
-    if (wakt < "23:59") ucapanWaktu = "Selamat Malam"
-    if (wakt < "19:00") ucapanWaktu = "Selamat Petang"
-    if (wakt < "18:00") ucapanWaktu = "Selamat Sore"
-    if (wakt < "15:00") ucapanWaktu = "Selamat Siang"
-    if (wakt < "10:00") ucapanWaktu = "Selamat Pagi"
-    if (wakt < "05:00") ucapanWaktu = "Selamat Subuh"
-    if (wakt < "03:00") ucapanWaktu = "Selamat Tengah Malam"
-
-    return ucapanWaktu
 }
 
 //—————「 Don"t change it 」—————//
