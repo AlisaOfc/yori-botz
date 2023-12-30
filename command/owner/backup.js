@@ -3,7 +3,7 @@ import cp, { exec as _exec } from "child_process"
 
 export default {
     command: ["backup"],
-    description: "Mencadangkan file",
+    description: "Mencadangkan file script code",
     example: "",
     name: "backup",
     tags: "owner",

@@ -353,8 +353,7 @@ export default new (class Function {
    }
 
    timeImage() {
-      let image = ""
-      let waktu = moment.tz("Asia/Jakarta").format("HH:mm")
+      let waktu = moment.tz("Asia/Jakarta").format("HH:mm"), image
 
       if (waktu < "23:59") image = fs.readFileSync("./storage/media/image time (1).jpg")
       if (waktu < "18:00") image = fs.readFileSync("./storage/media/image time (2).jpg")
