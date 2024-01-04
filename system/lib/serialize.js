@@ -16,26 +16,6 @@ export function Client({ conn, store }) {
     }
 
     const client = Object.defineProperties(conn, {
-        appenTextMessage: {
-            async value(m, text, chatUpdate) {
-                let messages = await baileys.generateWAMessage(m.chat, { text: text, mentions: m.mentionedJid }, { userJid: conn.user.id, quoted: m.quoted && m.quoted.fakeObj })
-
-                messages.key.fromMe = baileys.areJidsSameUser(m.sender, conn.user.id)
-                messages.key.id = m.key.id
-                messages.pushName = m.pushName
-
-                if (m.isGroup) messages.participant = m.sender
-
-                let msg = {
-                    ...chatUpdate,
-                    messages: [baileys.proto.WebMessageInfo.fromObject(messages)],
-                    type: "append"
-                }
-
-                conn.ev.emit("messages.upsert", msg)
-            }
-        },
-
         logger: {
             get() {
                 return {

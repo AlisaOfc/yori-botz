@@ -1,15 +1,6 @@
-import os from "os"
-    
 let menu = {
 	before: `
-*${global.name}* adalah bot WhatsApp yang dapat anda gunakan sebagai alat untuk membuat *Stiker*, mendengarkan *Musik*, mengunduh konten dari *Media Sosial*, dan memainkan *Game RPG* secara real-time.
-
-┌ • Hi @%user %ucapan
-│ • *Uptime* : %uptime
-│ • *Prefix* : ( %prefix )
-│ • *Database* : %database
-│ • *Memory Used* : %memory_used / %memory_free
-╰───────···
+Hi @%user %ucapan
 
 ┌ • *Name* : %name
 │ • *Limit* : %limit
@@ -25,19 +16,14 @@ let menu = {
 }
 
 let tags = {
-    "download": "Download Menu",
-    "group": "Group Menu",
-    "info": "Informasi Menu",
-    "main": "Main Menu",
-    "owner": "Owner Menu",
-    "tools": "Tools Menu"
+	"info": "Informasi Menu"
 }
 
 export default {
-    command: ["allmenu"],
-    description: "Untuk menampilkan semua menu, dan melihat cara menggunakan menu",
+    command: ["menuinfo"],
+    description: "Untuk menampilkan menu tipe info, dan melihat cara menggunakan menu",
     example: "",
-    name: "allmenu",
+    name: "menuinfo",
     tags: "listmenu",
 
     register: true,
@@ -75,7 +61,7 @@ export default {
         		}), menu.footer].join("\n")
         	}), menu.after].join("\n")
 
-        	text = text.replace(/%user/, m.sender.split("@")[0]).replace(/%ucapan/, ucapan).replace(/%uptime/, func.runtime(process.uptime())).replace(/%prefix/, m.prefix).replace(/%database/, Object.keys(db.users).length).replace(/%memory_used/, func.formatSize(os.totalmem() - os.freemem())).replace(/%memory_free/, func.formatSize(os.totalmem())).replace(/%name/, name).replace(/%limit/, premium ? "Infinity" : limit + "/25").replace(/%level/, level).replace(/%money/, money.toLocaleString()).replace(/%status/, premium ? "Premium" : "Free").replace(/%readmore/, readMore)
+        	text = text.replace(/%user/, m.sender.split("@")[0]).replace(/%ucapan/, ucapan).replace(/%name/, name).replace(/%limit/, premium ? "Infinity" : limit + "/25").replace(/%level/, level).replace(/%money/, money.toLocaleString()).replace(/%status/, premium ? "Premium" : "Free").replace(/%readmore/, readMore)
         	conn.sendMessage(m.chat, { text: text.trim(),
         	    contextInfo: {
                     mentionedJid: [m.sender],
